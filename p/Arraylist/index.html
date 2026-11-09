@@ -1,0 +1,963 @@
+<!doctype html><html lang=zh-cn dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="实现动态数组、数组（顺序存储）基本原理、动态数组代码实现"><title>静态、动态数组相关内容</title>
+<link rel=canonical href=https://zihanhanhan.github.io/zihhblog_show/p/Arraylist/><link rel=stylesheet href=/zihhblog_show/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css><meta property='og:title' content="静态、动态数组相关内容"><meta property='og:description' content="实现动态数组、数组（顺序存储）基本原理、动态数组代码实现"><meta property='og:url' content='https://zihanhanhan.github.io/zihhblog_show/p/Arraylist/'><meta property='og:site_name' content='Zihh Blog'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content><meta property='article:published_time' content='2025-03-30T00:00:00+00:00'><meta property='article:modified_time' content='2025-03-30T00:00:00+00:00'><meta name=twitter:title content="静态、动态数组相关内容"><meta name=twitter:description content="实现动态数组、数组（顺序存储）基本原理、动态数组代码实现"></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label=切换菜单>
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/zihhblog_show/><img src=/zihhblog_show/img/avatar_hu_9a51f789a36fe715.png width=300 height=300 class=site-logo loading=lazy alt=Avatar></a></figure><div class=site-meta><h1 class=site-name><a href=/zihhblog_show>Zihh Blog</a></h1><h2 class=site-description>做你不想做的</h2></div></header><ol class=menu id=main-menu><li><a href=/zihhblog_show/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>主页</span></a></li><li><a href=/zihhblog_show/about/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>关于</span></a></li><li><a href=/zihhblog_show/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>目录</span></a></li><li><a href=/zihhblog_show/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>搜索</span></a></li><li><a href=/zihhblog_show/links/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>链接</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>暗色模式</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">目录</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#增删改查>增删改查</a></li></ol><ol><li><a href=#动态数组实现>动态数组实现</a><ol><li><a href=#关键点1-自动扩缩容>关键点1 自动扩缩容</a></li><li><a href=#关键点2-索引越界检查>关键点2 索引越界检查</a></li><li><a href=#关键点3-删除元素防止内存泄漏>关键点3 删除元素防止内存泄漏</a></li><li><a href=#代码实现>代码实现：</a></li></ol></li></ol><ol><li><a href=#链表节点定义>链表节点定义</a></li><li><a href=#定义的原因>定义的原因</a></li><li><a href=#双链表的基本操作>双链表的基本操作</a><ol><li><a href=#查改>查/改</a></li><li><a href=#增>增</a><ol><li><a href=#在双链表头部插入元素>在双链表头部插入元素</a></li></ol></li><li><a href=#插>插</a><ol><li><a href=#在双链表尾部插入元素>在双链表尾部插入元素</a></li><li><a href=#在双链表中间插入新元素>在双链表中间插入新元素</a></li></ol></li><li><a href=#删>删</a><ol><li><a href=#在双链表中删除节点时>在双链表中删除节点时</a></li><li><a href=#在双链表头部删除元素>在双链表头部删除元素</a></li><li><a href=#在双链表尾部删除元素>在双链表尾部删除元素</a></li></ol></li></ol></li><li><a href=#数组链表的变换>数组链表的变换</a><ol><li><a href=#环形数组>环形数组</a></li><li><a href=#代码实现-1>代码实现</a></li><li><a href=#用途>用途</a></li><li><a href=#具体含义>具体含义</a></li></ol></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/zihhblog_show/categories/algorithm-notes/>算法笔记</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/zihhblog_show/p/Arraylist/>静态、动态数组相关内容</a></h2><h3 class=article-subtitle>实现动态数组、数组（顺序存储）基本原理、动态数组代码实现</h3></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Mar 30, 2025</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>阅读时长: 15 分钟</time></div></footer></div></header><section class=article-content><h1 id=静态数组>静态数组</h1><p>一块连续的内存空间，我们可以通过索引来访问这块内存空间中的元素，这才是数组的原始形态。而「动态数组」是编程语言为了方便我们使用，在静态数组的基础上帮我们添加了一些常用的 API，比如 <code>push, insert, remove</code> 等等方法，这些 API 可以让我们更方便地操作数组元素，不用自己去写代码实现这些操作。</p><p>静态数组本质上就是一块<strong>连续的</strong>内存空间，<code>int arr[10]</code> 这个语句我们可以得知：</p><p>1、我们知道这块内存空间的首地址（数组名 <code>arr</code> 就指向这块内存空间的首地址）。</p><p>2、我们知道了每个元素的类型（比如 int），也就是知道了每个元素占用的内存空间大小（比如一个 int 占 4 字节，32 bit）。</p><p>3、这块内存空间是连续的，其大小为 <code>10 * sizeof(int)</code> 即 40 字节。</p><p><strong>所以，我们获得了数组的超能力「随机访问」：只要给定任何一个数组索引，我可以在 O(1)*O*(1) 的时间内直接获取到对应元素的值</strong>。</p><p>因为我可以通过首地址和索引直接计算出目标元素的内存地址。计算机的内存寻址时间可以认为是 O(1)<em>O</em>(1)，所以数组的随机访问时间复杂度是 O(1)<em>O</em>(1)。</p><h2 id=增删改查>增删改查</h2><p>在数组未满的情况下 增的操作较为简单</p><p>若数组已满。连续内存必须一次性分配，分配完了之后就不能随意增减了。只能重新申请一块更大的内存空间，复制原数据插入新元素。</p><p><strong>综上，数组的扩容操作会涉及到新数组的开辟和数据的复制，时间复杂度是 O(N)。</strong></p><p>其他删改查操作类似。在数组中间删除元素的时间复杂度是 O(N)，因为涉及到数据搬移。</p><p>综上，静态数组的增删查改操作的时间复杂度是：</p><ul><li>增：<ul><li>在末尾追加元素：O(1)。</li><li>在中间（非末尾）插入元素：O(N)。</li></ul></li><li>删：<ul><li>删除末尾元素：O(1)。</li><li>删除中间（非末尾）元素：O(N)。</li></ul></li><li>查：给定指定索引，查询索引对应的元素的值，时间复杂度 O(1)。</li><li>改：给定指定索引，修改索引对应的元素的值，时间复杂度 O(1)。</li></ul><h1 id=动态数组>动态数组</h1><p><strong>动态数组底层还是静态数组，只是自动帮我们进行数组空间的扩缩容，并把增删查改操作进行了封装，让我们使用起来更方便而已</strong>。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// 创建动态数组</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 不用显式指定数组大小，它会根据实际存储的元素数量自动扩缩容</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>ArrayList</span><span class=o>&lt;</span><span class=n>Integer</span><span class=o>&gt;</span><span class=w> </span><span class=n>arr</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>ArrayList</span><span class=o>&lt;&gt;</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>for</span><span class=w> </span><span class=p>(</span><span class=kt>int</span><span class=w> </span><span class=n>i</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>0</span><span class=p>;</span><span class=w> </span><span class=n>i</span><span class=w> </span><span class=o>&lt;</span><span class=w> </span><span class=n>10</span><span class=p>;</span><span class=w> </span><span class=n>i</span><span class=o>++</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// 在末尾追加元素，时间复杂度 O(1)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>arr</span><span class=p>.</span><span class=na>add</span><span class=p>(</span><span class=n>i</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 在中间插入元素，时间复杂度 O(N)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 在索引 2 的位置插入元素 666</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>arr</span><span class=p>.</span><span class=na>add</span><span class=p>(</span><span class=n>2</span><span class=p>,</span><span class=w> </span><span class=n>666</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 在头部插入元素，时间复杂度 O(N)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>arr</span><span class=p>.</span><span class=na>add</span><span class=p>(</span><span class=n>0</span><span class=p>,</span><span class=w> </span><span class=o>-</span><span class=n>1</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 删除末尾元素，时间复杂度 O(1)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>arr</span><span class=p>.</span><span class=na>remove</span><span class=p>(</span><span class=n>arr</span><span class=p>.</span><span class=na>size</span><span class=p>()</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=n>1</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 删除中间元素，时间复杂度 O(N)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 删除索引 2 的元素</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>arr</span><span class=p>.</span><span class=na>remove</span><span class=p>(</span><span class=n>2</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 根据索引查询元素，时间复杂度 O(1)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kt>int</span><span class=w> </span><span class=n>a</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>arr</span><span class=p>.</span><span class=na>get</span><span class=p>(</span><span class=n>0</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 根据索引修改元素，时间复杂度 O(1)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>arr</span><span class=p>.</span><span class=na>set</span><span class=p>(</span><span class=n>0</span><span class=p>,</span><span class=w> </span><span class=n>100</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 根据元素值查找索引，时间复杂度 O(N)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kt>int</span><span class=w> </span><span class=n>index</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>arr</span><span class=p>.</span><span class=na>indexOf</span><span class=p>(</span><span class=n>666</span><span class=p>);</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h2 id=动态数组实现>动态数组实现</h2><h3 id=关键点1-自动扩缩容>关键点1 自动扩缩容</h3><p>在实际使用动态数组时，缩容也是重要的优化手段。比方说一个动态数组开辟了能够存储 1000 个元素的连续内存空间，但是实际只存了 10 个元素，那就有 990 个空间是空闲的。为了避免资源浪费，我们其实可以适当缩小存储空间，这就是缩容。</p><p>这里实现一个简单的扩缩容的策略：</p><ul><li>当数组元素个数达到底层静态数组的容量上限时，扩容为原来的 2 倍；</li><li>当数组元素个数缩减到底层静态数组的容量的 1/4 时，缩容为原来的 1/2</li></ul><h3 id=关键点2-索引越界检查>关键点2 索引越界检查</h3><p>代码实现中，有两个检查越界的方法，分别是 <code>checkElementIndex</code> 和 <code>checkPositionIndex</code>，区别仅仅在于 <code>index &lt; size</code> 和 <code>index &lt;= size</code>。<code>checkPositionIndex</code> 是专门用来处理在数组中插入元素的情况。</p><p>有一个 <code>nums</code> 数组，对于每个元素来说，合法的索引一定是 <code>index &lt; size</code>：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>nums = [5, 6, 7, 8]
+</span></span><span class=line><span class=cl>index   0  1  2  3
+</span></span></code></pre></td></tr></table></div></div><p>但如果是要在数组中插入新元素，那么新元素可能的插入位置并不是元素的索引，而是索引之间的空隙：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>nums = [ | 5 | 6 | 7 | 8 | ]
+</span></span><span class=line><span class=cl>index    0   1   2   3   4
+</span></span></code></pre></td></tr></table></div></div><p>这些空隙都是合法的插入位置，所以说 <code>index == size</code> 也是合法的。这就是 <code>checkPositionIndex</code> 和 <code>checkElementIndex</code> 的区别。</p><h3 id=关键点3-删除元素防止内存泄漏>关键点3 删除元素防止内存泄漏</h3><p>单从算法的角度，不需要关心被删掉的元素应该如何处理，但是具体到代码实现，我们需要注意可能出现的内存泄漏。</p><p>Java 的垃圾回收机制是基于图算法的可达性分析，如果一个对象再也无法被访问到，那么这个对象占用的内存才会被释放；否则，垃圾回收器会认为这个对象还在使用中，就不会释放这个对象占用的内存。在下面代码中会体现。</p><ul><li><code>&lt;E></code>：这是泛型的语法，<code>E</code> 是类型参数，它代表元素的类型。使用泛型可以让这个类在使用时指定具体的数据类型，增加了代码的复用性。例如，<code>MyArrayList&lt;Integer></code> 表示这个列表存储的是 <code>Integer</code> 类型的数据。</li></ul><h3 id=代码实现>代码实现：</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span><span class=lnt>134
+</span><span class=lnt>135
+</span><span class=lnt>136
+</span><span class=lnt>137
+</span><span class=lnt>138
+</span><span class=lnt>139
+</span><span class=lnt>140
+</span><span class=lnt>141
+</span><span class=lnt>142
+</span><span class=lnt>143
+</span><span class=lnt>144
+</span><span class=lnt>145
+</span><span class=lnt>146
+</span><span class=lnt>147
+</span><span class=lnt>148
+</span><span class=lnt>149
+</span><span class=lnt>150
+</span><span class=lnt>151
+</span><span class=lnt>152
+</span><span class=lnt>153
+</span><span class=lnt>154
+</span><span class=lnt>155
+</span><span class=lnt>156
+</span><span class=lnt>157
+</span><span class=lnt>158
+</span><span class=lnt>159
+</span><span class=lnt>160
+</span><span class=lnt>161
+</span><span class=lnt>162
+</span><span class=lnt>163
+</span><span class=lnt>164
+</span><span class=lnt>165
+</span><span class=lnt>166
+</span><span class=lnt>167
+</span><span class=lnt>168
+</span><span class=lnt>169
+</span><span class=lnt>170
+</span><span class=lnt>171
+</span><span class=lnt>172
+</span><span class=lnt>173
+</span><span class=lnt>174
+</span><span class=lnt>175
+</span><span class=lnt>176
+</span><span class=lnt>177
+</span><span class=lnt>178
+</span><span class=lnt>179
+</span><span class=lnt>180
+</span><span class=lnt>181
+</span><span class=lnt>182
+</span><span class=lnt>183
+</span><span class=lnt>184
+</span><span class=lnt>185
+</span><span class=lnt>186
+</span><span class=lnt>187
+</span><span class=lnt>188
+</span><span class=lnt>189
+</span><span class=lnt>190
+</span><span class=lnt>191
+</span><span class=lnt>192
+</span><span class=lnt>193
+</span><span class=lnt>194
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kn>import</span><span class=w> </span><span class=nn>java.util.Arrays</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>java.util.Iterator</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>java.util.NoSuchElementException</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 泛型类 MyArrayList</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>MyArrayList</span><span class=o>&lt;</span><span class=n>E</span><span class=o>&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// 真正存储数据的底层数组</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=n>E</span><span class=o>[]</span><span class=w> </span><span class=n>data</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// 记录当前元素个数</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=kt>int</span><span class=w> </span><span class=n>size</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// 默认初始容量 私有 类本身 固定值变量</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=kd>static</span><span class=w> </span><span class=kd>final</span><span class=w> </span><span class=kt>int</span><span class=w> </span><span class=n>INIT_CAP</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>1</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// 无参构造函数 创建对象时不传参数就调用这个构造函数</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=nf>MyArrayList</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 用于调用同一个类中的另一个带参构造函数，并将 INIT_CAP 的值（即 1）作为参数传递过去</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>this</span><span class=p>(</span><span class=n>INIT_CAP</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=nf>MyArrayList</span><span class=p>(</span><span class=kt>int</span><span class=w> </span><span class=n>initCapacity</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 需要进行类型转换，因为 Java 不允许直接创建泛型数组</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// Object 是 Java 中所有类的基类，所有类都直接或间接地继承自 Object 类</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>data</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=p>(</span><span class=n>E</span><span class=o>[]</span><span class=p>)</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>Object</span><span class=o>[</span><span class=n>initCapacity</span><span class=o>]</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>size</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>0</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// 增</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>addLast</span><span class=p>(</span><span class=n>E</span><span class=w> </span><span class=n>e</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=kt>int</span><span class=w> </span><span class=n>cap</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>data</span><span class=p>.</span><span class=na>length</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 看 data 数组容量够不够</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>size</span><span class=w> </span><span class=o>==</span><span class=w> </span><span class=n>cap</span><span class=p>)</span><span class=w> 
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>resize</span><span class=p>(</span><span class=n>2</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=n>cap</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 在尾部插入元素</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>data</span><span class=o>[</span><span class=n>size</span><span class=o>]</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>e</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>size</span><span class=o>++</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>add</span><span class=p>(</span><span class=kt>int</span><span class=w> </span><span class=n>index</span><span class=p>,</span><span class=w> </span><span class=n>E</span><span class=w> </span><span class=n>e</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 检查索引越界</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>checkPositionIndex</span><span class=p>(</span><span class=n>index</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=kt>int</span><span class=w> </span><span class=n>cap</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>data</span><span class=p>.</span><span class=na>length</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 看 data 数组容量够不够</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>size</span><span class=w> </span><span class=o>==</span><span class=w> </span><span class=n>cap</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>resize</span><span class=p>(</span><span class=n>2</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=n>cap</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 搬移数据 data[index..] -&gt; data[index+1..]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 给新元素腾出位置</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>for</span><span class=w> </span><span class=p>(</span><span class=kt>int</span><span class=w> </span><span class=n>i</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>size</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=n>1</span><span class=p>;</span><span class=w> </span><span class=n>i</span><span class=w> </span><span class=o>&gt;=</span><span class=w> </span><span class=n>index</span><span class=p>;</span><span class=w> </span><span class=n>i</span><span class=o>--</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>data</span><span class=o>[</span><span class=n>i</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>1</span><span class=o>]</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>data</span><span class=o>[</span><span class=n>i</span><span class=o>]</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 插入新元素</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>data</span><span class=o>[</span><span class=n>index</span><span class=o>]</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>e</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>size</span><span class=o>++</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>addFirst</span><span class=p>(</span><span class=n>E</span><span class=w> </span><span class=n>e</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>add</span><span class=p>(</span><span class=n>0</span><span class=p>,</span><span class=w> </span><span class=n>e</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// 删</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=n>E</span><span class=w> </span><span class=nf>removeLast</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>size</span><span class=w> </span><span class=o>==</span><span class=w> </span><span class=n>0</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>throw</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>NoSuchElementException</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=kt>int</span><span class=w> </span><span class=n>cap</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>data</span><span class=p>.</span><span class=na>length</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 可以缩容，节约空间</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>size</span><span class=w> </span><span class=o>==</span><span class=w> </span><span class=n>cap</span><span class=w> </span><span class=o>/</span><span class=w> </span><span class=n>4</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>resize</span><span class=p>(</span><span class=n>cap</span><span class=w> </span><span class=o>/</span><span class=w> </span><span class=n>2</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>E</span><span class=w> </span><span class=n>deletedVal</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>data</span><span class=o>[</span><span class=n>size</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=n>1</span><span class=o>]</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 删除最后一个元素</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 必须给最后一个元素置为 null，否则会内存泄漏</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>data</span><span class=o>[</span><span class=n>size</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=n>1</span><span class=o>]</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kc>null</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>size</span><span class=o>--</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=n>deletedVal</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=n>E</span><span class=w> </span><span class=nf>remove</span><span class=p>(</span><span class=kt>int</span><span class=w> </span><span class=n>index</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 检查索引越界</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>checkElementIndex</span><span class=p>(</span><span class=n>index</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=kt>int</span><span class=w> </span><span class=n>cap</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>data</span><span class=p>.</span><span class=na>length</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 可以缩容，节约空间</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>size</span><span class=w> </span><span class=o>==</span><span class=w> </span><span class=n>cap</span><span class=w> </span><span class=o>/</span><span class=w> </span><span class=n>4</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>resize</span><span class=p>(</span><span class=n>cap</span><span class=w> </span><span class=o>/</span><span class=w> </span><span class=n>2</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>E</span><span class=w> </span><span class=n>deletedVal</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>data</span><span class=o>[</span><span class=n>index</span><span class=o>]</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 搬移数据 data[index+1..] -&gt; data[index..]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>for</span><span class=w> </span><span class=p>(</span><span class=kt>int</span><span class=w> </span><span class=n>i</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>index</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>1</span><span class=p>;</span><span class=w> </span><span class=n>i</span><span class=w> </span><span class=o>&lt;</span><span class=w> </span><span class=n>size</span><span class=p>;</span><span class=w> </span><span class=n>i</span><span class=o>++</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>data</span><span class=o>[</span><span class=n>i</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=n>1</span><span class=o>]</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>data</span><span class=o>[</span><span class=n>i</span><span class=o>]</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>data</span><span class=o>[</span><span class=n>size</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=n>1</span><span class=o>]</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kc>null</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>size</span><span class=o>--</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=n>deletedVal</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=n>E</span><span class=w> </span><span class=nf>removeFirst</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=n>remove</span><span class=p>(</span><span class=n>0</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// 查</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=n>E</span><span class=w> </span><span class=nf>get</span><span class=p>(</span><span class=kt>int</span><span class=w> </span><span class=n>index</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 检查索引越界</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>checkElementIndex</span><span class=p>(</span><span class=n>index</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=n>data</span><span class=o>[</span><span class=n>index</span><span class=o>]</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// 改</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=n>E</span><span class=w> </span><span class=nf>set</span><span class=p>(</span><span class=kt>int</span><span class=w> </span><span class=n>index</span><span class=p>,</span><span class=w> </span><span class=n>E</span><span class=w> </span><span class=n>element</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 检查索引越界</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>checkElementIndex</span><span class=p>(</span><span class=n>index</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 修改数据</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>E</span><span class=w> </span><span class=n>oldVal</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>data</span><span class=o>[</span><span class=n>index</span><span class=o>]</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>data</span><span class=o>[</span><span class=n>index</span><span class=o>]</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>element</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=n>oldVal</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// 工具方法</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>int</span><span class=w> </span><span class=nf>size</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=n>size</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>boolean</span><span class=w> </span><span class=nf>isEmpty</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=n>size</span><span class=w> </span><span class=o>==</span><span class=w> </span><span class=n>0</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// 将 data 的容量改为 newCap</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>resize</span><span class=p>(</span><span class=kt>int</span><span class=w> </span><span class=n>newCap</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>E</span><span class=o>[]</span><span class=w> </span><span class=n>temp</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=p>(</span><span class=n>E</span><span class=o>[]</span><span class=p>)</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>Object</span><span class=o>[</span><span class=n>newCap</span><span class=o>]</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>for</span><span class=w> </span><span class=p>(</span><span class=kt>int</span><span class=w> </span><span class=n>i</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>0</span><span class=p>;</span><span class=w> </span><span class=n>i</span><span class=w> </span><span class=o>&lt;</span><span class=w> </span><span class=n>size</span><span class=p>;</span><span class=w> </span><span class=n>i</span><span class=o>++</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>temp</span><span class=o>[</span><span class=n>i</span><span class=o>]</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>data</span><span class=o>[</span><span class=n>i</span><span class=o>]</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>data</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>temp</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=kt>boolean</span><span class=w> </span><span class=nf>isElementIndex</span><span class=p>(</span><span class=kt>int</span><span class=w> </span><span class=n>index</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=n>index</span><span class=w> </span><span class=o>&gt;=</span><span class=w> </span><span class=n>0</span><span class=w> </span><span class=o>&amp;&amp;</span><span class=w> </span><span class=n>index</span><span class=w> </span><span class=o>&lt;</span><span class=w> </span><span class=n>size</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=kt>boolean</span><span class=w> </span><span class=nf>isPositionIndex</span><span class=p>(</span><span class=kt>int</span><span class=w> </span><span class=n>index</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=n>index</span><span class=w> </span><span class=o>&gt;=</span><span class=w> </span><span class=n>0</span><span class=w> </span><span class=o>&amp;&amp;</span><span class=w> </span><span class=n>index</span><span class=w> </span><span class=o>&lt;=</span><span class=w> </span><span class=n>size</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// 检查 index 索引位置是否可以存在元素</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>checkElementIndex</span><span class=p>(</span><span class=kt>int</span><span class=w> </span><span class=n>index</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=o>!</span><span class=n>isElementIndex</span><span class=p>(</span><span class=n>index</span><span class=p>))</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>throw</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>IndexOutOfBoundsException</span><span class=p>(</span><span class=s>&#34;Index: &#34;</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>index</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=s>&#34;, Size: &#34;</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>size</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// 检查 index 索引位置是否可以添加元素</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>checkPositionIndex</span><span class=p>(</span><span class=kt>int</span><span class=w> </span><span class=n>index</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=o>!</span><span class=n>isPositionIndex</span><span class=p>(</span><span class=n>index</span><span class=p>))</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>throw</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>IndexOutOfBoundsException</span><span class=p>(</span><span class=s>&#34;Index: &#34;</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>index</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=s>&#34;, Size: &#34;</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>size</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>display</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=s>&#34;size = &#34;</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>size</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=s>&#34; cap = &#34;</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>data</span><span class=p>.</span><span class=na>length</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=n>Arrays</span><span class=p>.</span><span class=na>toString</span><span class=p>(</span><span class=n>data</span><span class=p>));</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kd>static</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>main</span><span class=p>(</span><span class=n>String</span><span class=o>[]</span><span class=w> </span><span class=n>args</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 初始容量设置为 3</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>MyArrayList</span><span class=o>&lt;</span><span class=n>Integer</span><span class=o>&gt;</span><span class=w> </span><span class=n>arr</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>MyArrayList</span><span class=o>&lt;&gt;</span><span class=p>(</span><span class=n>3</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 添加 5 个元素</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>for</span><span class=w> </span><span class=p>(</span><span class=kt>int</span><span class=w> </span><span class=n>i</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>1</span><span class=p>;</span><span class=w> </span><span class=n>i</span><span class=w> </span><span class=o>&lt;=</span><span class=w> </span><span class=n>5</span><span class=p>;</span><span class=w> </span><span class=n>i</span><span class=o>++</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>arr</span><span class=p>.</span><span class=na>addLast</span><span class=p>(</span><span class=n>i</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>arr</span><span class=p>.</span><span class=na>remove</span><span class=p>(</span><span class=n>3</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>arr</span><span class=p>.</span><span class=na>add</span><span class=p>(</span><span class=n>1</span><span class=p>,</span><span class=w> </span><span class=n>9</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>arr</span><span class=p>.</span><span class=na>addFirst</span><span class=p>(</span><span class=n>100</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=kt>int</span><span class=w> </span><span class=n>val</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>arr</span><span class=p>.</span><span class=na>removeLast</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>for</span><span class=w> </span><span class=p>(</span><span class=kt>int</span><span class=w> </span><span class=n>i</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>0</span><span class=p>;</span><span class=w> </span><span class=n>i</span><span class=w> </span><span class=o>&lt;</span><span class=w> </span><span class=n>arr</span><span class=p>.</span><span class=na>size</span><span class=p>();</span><span class=w> </span><span class=n>i</span><span class=o>++</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=n>arr</span><span class=p>.</span><span class=na>get</span><span class=p>(</span><span class=n>i</span><span class=p>));</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h1 id=链表链式存储基本原理>链表（链式存储）基本原理</h1><h2 id=链表节点定义>链表节点定义</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>class</span> <span class=nc>Node</span><span class=o>&lt;</span><span class=n>E</span><span class=o>&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>E</span><span class=w> </span><span class=n>val</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>Node</span><span class=o>&lt;</span><span class=n>E</span><span class=o>&gt;</span><span class=w> </span><span class=n>next</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>Node</span><span class=o>&lt;</span><span class=n>E</span><span class=o>&gt;</span><span class=w> </span><span class=n>prev</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>Node</span><span class=p>(</span><span class=n>Node</span><span class=o>&lt;</span><span class=n>E</span><span class=o>&gt;</span><span class=w> </span><span class=n>prev</span><span class=p>,</span><span class=w> </span><span class=n>E</span><span class=w> </span><span class=n>element</span><span class=p>,</span><span class=w> </span><span class=n>Node</span><span class=o>&lt;</span><span class=n>E</span><span class=o>&gt;</span><span class=w> </span><span class=n>next</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>this</span><span class=p>.</span><span class=na>val</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>element</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>this</span><span class=p>.</span><span class=na>next</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>next</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>this</span><span class=p>.</span><span class=na>prev</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>prev</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h2 id=定义的原因>定义的原因</h2><p>之前一直不明白为什么链表要这样定义 现在好像有点理解</p><ul><li><p><code>Node</code>：类的名称，代表链表中的一个节点。</p></li><li><p><code>&lt;E></code>：这是泛型的语法，<code>E</code> 是类型参数。使用泛型可以让这个节点类在使用时指定具体的数据类型，增强了代码的复用性。例如，<code>Node&lt;Integer></code> 表示这个节点存储的是 <code>Integer</code> 类型的数据。</p></li><li><p><code>E val;</code>：<code>val</code> 是一个泛型类型的变量，用于存储节点所包含的数据。其具体类型由使用该类时指定的泛型类型决定。</p></li><li><p><code>Node&lt;E> next;</code>：意味着 <code>next</code> 是一个指向 <code>Node</code> 类型对象的引用，并且这个 <code>Node</code> 对象存储的元素类型和当前 <code>Node</code> 对象一致。借助泛型，能保证整个双向链表中所有节点存储的元素类型相同。</p></li><li><p><code>Node&lt;E> prev;</code>：<code>prev</code> 也是一个指向 <code>Node&lt;E></code> 类型的引用，它指向当前节点的前一个节点。借助 <code>prev</code> 引用，能够从当前节点回溯到链表的前序节点。</p></li><li><p>Node(Node<e> prev, E element, Node<e> next)</p><p>Node类的构造函数，用于创建一个新的节点对象。它接收三个参数：</p><ul><li><code>prev</code>：当前节点的前一个节点的引用。</li><li><code>element</code>：当前节点要存储的数据。</li><li><code>next</code>：当前节点的下一个节点的引用。</li></ul></li><li><p><code>this.val = element;</code>：将传入的 <code>element</code> 赋值给当前节点的 <code>val</code> 成员变量，即存储节点的数据。</p></li><li><p><code>this.next = next;</code>：将传入的 <code>next</code> 引用赋值给当前节点的 <code>next</code> 成员变量，建立当前节点与下一个节点的连接。</p></li><li><p><code>this.prev = prev;</code>：将传入的 <code>prev</code> 引用赋值给当前节点的 <code>prev</code> 成员变量，建立当前节点与前一个节点的连接。</p></li></ul><p><strong>Java 允许类的成员变量是该类的引用</strong>
+但<strong>不会在定义时直接创建对象</strong>，所以不会导致无限递归。例如：class Node {Node next;} 这样写不会导致死循环，因为 <code>next</code> 只是<strong>一个指针 (引用)</strong>，并不会立即创建 <code>Node</code> 的实例。</p><p><strong>成员变量只是存储对象的地址（引用）</strong>
+<code>Node&lt;E> next;</code> 只是一个<strong>引用</strong>（存储的是地址），它不会立即创建 <code>Node&lt;E></code> 实例。只有当 <code>next</code> 真的指向一个新对象时，才会占用内存。这是一种<strong>自引用结构 (Self-Referential Structure)</strong>，用于实现链表、树等数据结构。</p><p>当写下 <code>Node&lt;E> next;</code> <strong>只创建了一个引用变量</strong>，用于存储<strong>另一个 <code>Node&lt;E></code> 对象的地址</strong>，但它本身不指向任何具体对象。</p><ul><li><strong>只有 <code>new Node&lt;>(...)</code> 时，才真正创建对象</strong>，并将对象的地址存入 <code>next</code> 或 <code>prev</code> 变量中。</li><li><strong>默认情况下</strong>，<code>next</code> 和 <code>prev</code> 的值是 <code>null</code>，表示它们<strong>没有指向任何对象</strong>。</li></ul><p>这就像：</p><ul><li><strong>引用变量 = 空盒子（用来存储地址）</strong></li><li><strong><code>new Node&lt;>(...)</code> = 真实的对象（占用内存）</strong></li><li><strong>赋值 <code>next = node2;</code> = 把 <code>node2</code> 的地址放入 <code>next</code> 盒子里</strong></li></ul><h2 id=双链表的基本操作>双链表的基本操作</h2><p>先写一个工具函数，用于创建一条双链表，方便后面的学习：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>class</span> <span class=nc>DoublyListNode</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kt>int</span><span class=w> </span><span class=n>val</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>DoublyListNode</span><span class=w> </span><span class=n>next</span><span class=p>,</span><span class=w> </span><span class=n>prev</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>DoublyListNode</span><span class=p>(</span><span class=kt>int</span><span class=w> </span><span class=n>x</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w> </span><span class=n>val</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>x</span><span class=p>;</span><span class=w> </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>DoublyListNode</span><span class=w> </span><span class=nf>createDoublyLinkedList</span><span class=p>(</span><span class=kt>int</span><span class=o>[]</span><span class=w> </span><span class=n>arr</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>arr</span><span class=w> </span><span class=o>==</span><span class=w> </span><span class=kc>null</span><span class=w> </span><span class=o>||</span><span class=w> </span><span class=n>arr</span><span class=p>.</span><span class=na>length</span><span class=w> </span><span class=o>==</span><span class=w> </span><span class=n>0</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=kc>null</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>DoublyListNode</span><span class=w> </span><span class=n>head</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>DoublyListNode</span><span class=p>(</span><span class=n>arr</span><span class=o>[</span><span class=n>0</span><span class=o>]</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>DoublyListNode</span><span class=w> </span><span class=n>cur</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>head</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// for 循环迭代创建双链表</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>for</span><span class=w> </span><span class=p>(</span><span class=kt>int</span><span class=w> </span><span class=n>i</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>1</span><span class=p>;</span><span class=w> </span><span class=n>i</span><span class=w> </span><span class=o>&lt;</span><span class=w> </span><span class=n>arr</span><span class=p>.</span><span class=na>length</span><span class=p>;</span><span class=w> </span><span class=n>i</span><span class=o>++</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>DoublyListNode</span><span class=w> </span><span class=n>newNode</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>DoublyListNode</span><span class=p>(</span><span class=n>arr</span><span class=o>[</span><span class=n>i</span><span class=o>]</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>cur</span><span class=p>.</span><span class=na>next</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>newNode</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>newNode</span><span class=p>.</span><span class=na>prev</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>cur</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>cur</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>cur</span><span class=p>.</span><span class=na>next</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>return</span><span class=w> </span><span class=n>head</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=查改>查/改</h3><p>对于双链表的遍历和查找，我们可以从头节点或尾节点开始，根据需要向前或向后遍历：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// 创建一条双链表</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>DoublyListNode</span><span class=w> </span><span class=n>head</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>createDoublyLinkedList</span><span class=p>(</span><span class=k>new</span><span class=w> </span><span class=kt>int</span><span class=o>[]</span><span class=p>{</span><span class=n>1</span><span class=p>,</span><span class=w> </span><span class=n>2</span><span class=p>,</span><span class=w> </span><span class=n>3</span><span class=p>,</span><span class=w> </span><span class=n>4</span><span class=p>,</span><span class=w> </span><span class=n>5</span><span class=p>});</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>DoublyListNode</span><span class=w> </span><span class=n>tail</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kc>null</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 从头节点向后遍历双链表</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>for</span><span class=w> </span><span class=p>(</span><span class=n>DoublyListNode</span><span class=w> </span><span class=n>p</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>head</span><span class=p>;</span><span class=w> </span><span class=n>p</span><span class=w> </span><span class=o>!=</span><span class=w> </span><span class=kc>null</span><span class=p>;</span><span class=w> </span><span class=n>p</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>p</span><span class=p>.</span><span class=na>next</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=n>p</span><span class=p>.</span><span class=na>val</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>tail</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>p</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 从尾节点向前遍历双链表</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>for</span><span class=w> </span><span class=p>(</span><span class=n>DoublyListNode</span><span class=w> </span><span class=n>p</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>tail</span><span class=p>;</span><span class=w> </span><span class=n>p</span><span class=w> </span><span class=o>!=</span><span class=w> </span><span class=kc>null</span><span class=p>;</span><span class=w> </span><span class=n>p</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>p</span><span class=p>.</span><span class=na>prev</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=n>p</span><span class=p>.</span><span class=na>val</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>访问或修改节点时，可以根据索引是靠近头部还是尾部，选择合适的方向遍历，这样可以一定程度上提高效率。</p><h3 id=增>增</h3><h4 id=在双链表头部插入元素>在双链表头部插入元素</h4><p>需要调整新节点和原头节点的指针：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// 创建一条双链表</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>DoublyListNode</span><span class=w> </span><span class=n>head</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>createDoublyLinkedList</span><span class=p>(</span><span class=k>new</span><span class=w> </span><span class=kt>int</span><span class=o>[]</span><span class=p>{</span><span class=n>1</span><span class=p>,</span><span class=w> </span><span class=n>2</span><span class=p>,</span><span class=w> </span><span class=n>3</span><span class=p>,</span><span class=w> </span><span class=n>4</span><span class=p>,</span><span class=w> </span><span class=n>5</span><span class=p>});</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 在双链表头部插入新节点 0</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>DoublyListNode</span><span class=w> </span><span class=n>newHead</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>DoublyListNode</span><span class=p>(</span><span class=n>0</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>newHead</span><span class=p>.</span><span class=na>next</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>head</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>head</span><span class=p>.</span><span class=na>prev</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>newHead</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>head</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>newHead</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 现在链表变成了 0 -&gt; 1 -&gt; 2 -&gt; 3 -&gt; 4 -&gt; 5</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=插>插</h3><h4 id=在双链表尾部插入元素>在双链表尾部插入元素</h4><p>如果我们持有尾节点的引用，这个操作会非常简单：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// 创建一条双链表</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>DoublyListNode</span><span class=w> </span><span class=n>head</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>createDoublyLinkedList</span><span class=p>(</span><span class=k>new</span><span class=w> </span><span class=kt>int</span><span class=o>[]</span><span class=p>{</span><span class=n>1</span><span class=p>,</span><span class=w> </span><span class=n>2</span><span class=p>,</span><span class=w> </span><span class=n>3</span><span class=p>,</span><span class=w> </span><span class=n>4</span><span class=p>,</span><span class=w> </span><span class=n>5</span><span class=p>});</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>DoublyListNode</span><span class=w> </span><span class=n>tail</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>head</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 先走到链表的最后一个节点</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>while</span><span class=w> </span><span class=p>(</span><span class=n>tail</span><span class=p>.</span><span class=na>next</span><span class=w> </span><span class=o>!=</span><span class=w> </span><span class=kc>null</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>tail</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>tail</span><span class=p>.</span><span class=na>next</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 在双链表尾部插入新节点 6</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>DoublyListNode</span><span class=w> </span><span class=n>newNode</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>DoublyListNode</span><span class=p>(</span><span class=n>6</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>tail</span><span class=p>.</span><span class=na>next</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>newNode</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>newNode</span><span class=p>.</span><span class=na>prev</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>tail</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 更新尾节点引用</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>tail</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>newNode</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 现在链表变成了 1 -&gt; 2 -&gt; 3 -&gt; 4 -&gt; 5 -&gt; 6</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h4 id=在双链表中间插入新元素>在双链表中间插入新元素</h4><p>需要调整前驱节点和后继节点的指针。</p><p>比如下面的例子，把元素 66 插入到索引 3（第 4 个节点）的位置：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// 创建一条双链表</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>DoublyListNode</span><span class=w> </span><span class=n>head</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>createDoublyLinkedList</span><span class=p>(</span><span class=k>new</span><span class=w> </span><span class=kt>int</span><span class=o>[]</span><span class=p>{</span><span class=n>1</span><span class=p>,</span><span class=w> </span><span class=n>2</span><span class=p>,</span><span class=w> </span><span class=n>3</span><span class=p>,</span><span class=w> </span><span class=n>4</span><span class=p>,</span><span class=w> </span><span class=n>5</span><span class=p>});</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 想要插入到索引 3（第 4 个节点）</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 需要操作索引 2（第 3 个节点）的指针</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>DoublyListNode</span><span class=w> </span><span class=n>p</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>head</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>for</span><span class=w> </span><span class=p>(</span><span class=kt>int</span><span class=w> </span><span class=n>i</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>0</span><span class=p>;</span><span class=w> </span><span class=n>i</span><span class=w> </span><span class=o>&lt;</span><span class=w> </span><span class=n>2</span><span class=p>;</span><span class=w> </span><span class=n>i</span><span class=o>++</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>p</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>p</span><span class=p>.</span><span class=na>next</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 组装新节点</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>DoublyListNode</span><span class=w> </span><span class=n>newNode</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>DoublyListNode</span><span class=p>(</span><span class=n>66</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>newNode</span><span class=p>.</span><span class=na>next</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>p</span><span class=p>.</span><span class=na>next</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>newNode</span><span class=p>.</span><span class=na>prev</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>p</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 插入新节点</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>p</span><span class=p>.</span><span class=na>next</span><span class=p>.</span><span class=na>prev</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>newNode</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>p</span><span class=p>.</span><span class=na>next</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>newNode</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 现在链表变成了 1 -&gt; 2 -&gt; 3 -&gt; 66 -&gt; 4 -&gt; 5</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=删>删</h3><h4 id=在双链表中删除节点时>在双链表中删除节点时</h4><p>需要调整前驱节点和后继节点的指针来摘除目标节点：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// 创建一条双链表</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>DoublyListNode</span><span class=w> </span><span class=n>head</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>createDoublyLinkedList</span><span class=p>(</span><span class=k>new</span><span class=w> </span><span class=kt>int</span><span class=o>[]</span><span class=p>{</span><span class=n>1</span><span class=p>,</span><span class=w> </span><span class=n>2</span><span class=p>,</span><span class=w> </span><span class=n>3</span><span class=p>,</span><span class=w> </span><span class=n>4</span><span class=p>,</span><span class=w> </span><span class=n>5</span><span class=p>});</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 删除第 4 个节点</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 先找到第 3 个节点</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>DoublyListNode</span><span class=w> </span><span class=n>p</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>head</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>for</span><span class=w> </span><span class=p>(</span><span class=kt>int</span><span class=w> </span><span class=n>i</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>0</span><span class=p>;</span><span class=w> </span><span class=n>i</span><span class=w> </span><span class=o>&lt;</span><span class=w> </span><span class=n>2</span><span class=p>;</span><span class=w> </span><span class=n>i</span><span class=o>++</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>p</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>p</span><span class=p>.</span><span class=na>next</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 现在 p 指向第 3 个节点，我们它后面那个节点摘除出去</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>DoublyListNode</span><span class=w> </span><span class=n>toDelete</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>p</span><span class=p>.</span><span class=na>next</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 把 toDelete 从链表中摘除</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>p</span><span class=p>.</span><span class=na>next</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>toDelete</span><span class=p>.</span><span class=na>next</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>toDelete</span><span class=p>.</span><span class=na>next</span><span class=p>.</span><span class=na>prev</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>p</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 把 toDelete 的前后指针都置为 null 是个好习惯（可选）</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>toDelete</span><span class=p>.</span><span class=na>next</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kc>null</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>toDelete</span><span class=p>.</span><span class=na>prev</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kc>null</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 现在链表变成了 1 -&gt; 2 -&gt; 3 -&gt; 5</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h4 id=在双链表头部删除元素>在双链表头部删除元素</h4><p>需要调整头节点的指针：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// 创建一条双链表</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>DoublyListNode</span><span class=w> </span><span class=n>head</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>createDoublyLinkedList</span><span class=p>(</span><span class=k>new</span><span class=w> </span><span class=kt>int</span><span class=o>[]</span><span class=p>{</span><span class=n>1</span><span class=p>,</span><span class=w> </span><span class=n>2</span><span class=p>,</span><span class=w> </span><span class=n>3</span><span class=p>,</span><span class=w> </span><span class=n>4</span><span class=p>,</span><span class=w> </span><span class=n>5</span><span class=p>});</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 删除头结点</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>DoublyListNode</span><span class=w> </span><span class=n>toDelete</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>head</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>head</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>head</span><span class=p>.</span><span class=na>next</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>head</span><span class=p>.</span><span class=na>prev</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kc>null</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 清理已删除节点的指针</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>toDelete</span><span class=p>.</span><span class=na>next</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kc>null</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 现在链表变成了 2 -&gt; 3 -&gt; 4 -&gt; 5</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h4 id=在双链表尾部删除元素>在双链表尾部删除元素</h4><p>在单链表中，由于缺乏前驱指针，所以删除尾节点时需要遍历到倒数第二个节点，操作它的 <code>next</code> 指针，才能把尾节点摘除出去。</p><p>但在双链表中，由于每个节点都存储了前驱节点的指针，所以我们可以直接操作尾节点，把它自己从链表中摘除：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// 创建一条双链表</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>DoublyListNode</span><span class=w> </span><span class=n>head</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>createDoublyLinkedList</span><span class=p>(</span><span class=k>new</span><span class=w> </span><span class=kt>int</span><span class=o>[]</span><span class=p>{</span><span class=n>1</span><span class=p>,</span><span class=w> </span><span class=n>2</span><span class=p>,</span><span class=w> </span><span class=n>3</span><span class=p>,</span><span class=w> </span><span class=n>4</span><span class=p>,</span><span class=w> </span><span class=n>5</span><span class=p>});</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 删除尾节点</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>DoublyListNode</span><span class=w> </span><span class=n>p</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>head</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 找到尾结点</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>while</span><span class=w> </span><span class=p>(</span><span class=n>p</span><span class=p>.</span><span class=na>next</span><span class=w> </span><span class=o>!=</span><span class=w> </span><span class=kc>null</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>p</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>p</span><span class=p>.</span><span class=na>next</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 现在 p 指向尾节点</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 把尾节点从链表中摘除</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>p</span><span class=p>.</span><span class=na>prev</span><span class=p>.</span><span class=na>next</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kc>null</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 把被删结点的指针都断开是个好习惯（可选）</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>p</span><span class=p>.</span><span class=na>prev</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kc>null</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 现在链表变成了 1 -&gt; 2 -&gt; 3 -&gt; 4</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h2 id=数组链表的变换>数组链表的变换</h2><h3 id=环形数组>环形数组</h3><p>环形数组的关键在于，它维护了两个指针 <code>start</code> 和 <code>end</code>，<code>start</code> 指向第一个有效元素的索引，<code>end</code> 指向最后一个有效元素的下一个位置索引。</p><p>这样，当我们在数组头部添加或删除元素时，只需要移动 <code>start</code> 索引，而在数组尾部添加或删除元素时，只需要移动 <code>end</code> 索引。</p><p>当 <code>start, end</code> 移动超出数组边界（<code>&lt; 0</code> 或 <code>>= arr.length</code>）时，我们可以通过求模运算 <code>%</code> 让它们转一圈到数组头部或尾部继续工作，这样就实现了环形数组的效果。</p><p>环形数组的区间被定义为左闭右开的，即 <code>[start, end)</code> 区间包含数组元素。所以其他的方法都是以左闭右开区间为基础实现的。</p><p>那么肯定就会有读者问，为啥要左闭右开，我就是想两端都开，或者两端都闭，不行么？</p><p>在 <a class=link href=https://labuladong.online/algo/essential-technique/sliding-window-framework/ target=_blank rel=noopener>滑动窗口算法核心框架</a> 中定义滑动窗口的边界时也会有类似的问题，这里我也解释一下。</p><p><strong>理论上，你可以随意设计区间的开闭，但一般设计为左闭右开区间是最方便处理的</strong>。</p><p>因为这样初始化 <code>start = end = 0</code> 时，区间 <code>[0, 0)</code> 中没有元素，但只要让 <code>end</code> 向右移动（扩大）一位，区间 <code>[0, 1)</code> 就包含一个元素 <code>0</code> 了。</p><p>如果你设置为两端都开的区间，那么让 <code>end</code> 向右移动一位后开区间 <code>(0, 1)</code> 仍然没有元素；如果你设置为两端都闭的区间，那么初始区间 <code>[0, 0]</code> 就已经包含了一个元素。这两种情况都会给边界处理带来不必要的麻烦，如果你非要使用的话，需要在代码中做一些特殊处理。</p><h3 id=代码实现-1>代码实现</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>CycleArray</span><span class=o>&lt;</span><span class=n>T</span><span class=o>&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=n>T</span><span class=o>[]</span><span class=w> </span><span class=n>arr</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=kt>int</span><span class=w> </span><span class=n>start</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=kt>int</span><span class=w> </span><span class=n>end</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=kt>int</span><span class=w> </span><span class=n>count</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=kt>int</span><span class=w> </span><span class=n>size</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=nf>CycleArray</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>this</span><span class=p>(</span><span class=n>1</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nd>@SuppressWarnings</span><span class=p>(</span><span class=s>&#34;unchecked&#34;</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=nf>CycleArray</span><span class=p>(</span><span class=kt>int</span><span class=w> </span><span class=n>size</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>this</span><span class=p>.</span><span class=na>size</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>size</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 因为 Java 不支持直接创建泛型数组，所以这里使用了类型转换</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>this</span><span class=p>.</span><span class=na>arr</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=p>(</span><span class=n>T</span><span class=o>[]</span><span class=p>)</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>Object</span><span class=o>[</span><span class=n>size</span><span class=o>]</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// start 指向第一个有效元素的索引，闭区间</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>this</span><span class=p>.</span><span class=na>start</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>0</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 切记 end 是一个开区间，</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 即 end 指向最后一个有效元素的下一个位置索引</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>this</span><span class=p>.</span><span class=na>end</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>0</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>this</span><span class=p>.</span><span class=na>count</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>0</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// 自动扩缩容辅助函数</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nd>@SuppressWarnings</span><span class=p>(</span><span class=s>&#34;unchecked&#34;</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>resize</span><span class=p>(</span><span class=kt>int</span><span class=w> </span><span class=n>newSize</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 创建新的数组</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>T</span><span class=o>[]</span><span class=w> </span><span class=n>newArr</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=p>(</span><span class=n>T</span><span class=o>[]</span><span class=p>)</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>Object</span><span class=o>[</span><span class=n>newSize</span><span class=o>]</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 将旧数组的元素复制到新数组中</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>for</span><span class=w> </span><span class=p>(</span><span class=kt>int</span><span class=w> </span><span class=n>i</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>0</span><span class=p>;</span><span class=w> </span><span class=n>i</span><span class=w> </span><span class=o>&lt;</span><span class=w> </span><span class=n>count</span><span class=p>;</span><span class=w> </span><span class=n>i</span><span class=o>++</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>newArr</span><span class=o>[</span><span class=n>i</span><span class=o>]</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>arr</span><span class=o>[</span><span class=p>(</span><span class=n>start</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>i</span><span class=p>)</span><span class=w> </span><span class=o>%</span><span class=w> </span><span class=n>size</span><span class=o>]</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>arr</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>newArr</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 重置 start 和 end 指针</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>start</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>0</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>end</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>count</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>size</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>newSize</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// 在数组头部添加元素，时间复杂度 O(1)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>addFirst</span><span class=p>(</span><span class=n>T</span><span class=w> </span><span class=n>val</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 当数组满时，扩容为原来的两倍</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>isFull</span><span class=p>())</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>resize</span><span class=p>(</span><span class=n>size</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=n>2</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 因为 start 是闭区间，所以先左移，再赋值</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>start</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=p>(</span><span class=n>start</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=n>1</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>size</span><span class=p>)</span><span class=w> </span><span class=o>%</span><span class=w> </span><span class=n>size</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>arr</span><span class=o>[</span><span class=n>start</span><span class=o>]</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>val</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>count</span><span class=o>++</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// 删除数组头部元素，时间复杂度 O(1)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>removeFirst</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>isEmpty</span><span class=p>())</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>throw</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>IllegalStateException</span><span class=p>(</span><span class=s>&#34;Array is empty&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 因为 start 是闭区间，所以先赋值，再右移</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>arr</span><span class=o>[</span><span class=n>start</span><span class=o>]</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kc>null</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>start</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=p>(</span><span class=n>start</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>1</span><span class=p>)</span><span class=w> </span><span class=o>%</span><span class=w> </span><span class=n>size</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>count</span><span class=o>--</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 如果数组元素数量减少到原大小的四分之一，则减小数组大小为一半</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>count</span><span class=w> </span><span class=o>&gt;</span><span class=w> </span><span class=n>0</span><span class=w> </span><span class=o>&amp;&amp;</span><span class=w> </span><span class=n>count</span><span class=w> </span><span class=o>==</span><span class=w> </span><span class=n>size</span><span class=w> </span><span class=o>/</span><span class=w> </span><span class=n>4</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>resize</span><span class=p>(</span><span class=n>size</span><span class=w> </span><span class=o>/</span><span class=w> </span><span class=n>2</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// 在数组尾部添加元素，时间复杂度 O(1)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>addLast</span><span class=p>(</span><span class=n>T</span><span class=w> </span><span class=n>val</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>isFull</span><span class=p>())</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>resize</span><span class=p>(</span><span class=n>size</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=n>2</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 因为 end 是开区间，所以是先赋值，再右移</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>arr</span><span class=o>[</span><span class=n>end</span><span class=o>]</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>val</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>end</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=p>(</span><span class=n>end</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>1</span><span class=p>)</span><span class=w> </span><span class=o>%</span><span class=w> </span><span class=n>size</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>count</span><span class=o>++</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// 删除数组尾部元素，时间复杂度 O(1)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>removeLast</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>isEmpty</span><span class=p>())</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>throw</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>IllegalStateException</span><span class=p>(</span><span class=s>&#34;Array is empty&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 因为 end 是开区间，所以先左移，再赋值</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>end</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=p>(</span><span class=n>end</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=n>1</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>size</span><span class=p>)</span><span class=w> </span><span class=o>%</span><span class=w> </span><span class=n>size</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>arr</span><span class=o>[</span><span class=n>end</span><span class=o>]</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kc>null</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>count</span><span class=o>--</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 缩容</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>count</span><span class=w> </span><span class=o>&gt;</span><span class=w> </span><span class=n>0</span><span class=w> </span><span class=o>&amp;&amp;</span><span class=w> </span><span class=n>count</span><span class=w> </span><span class=o>==</span><span class=w> </span><span class=n>size</span><span class=w> </span><span class=o>/</span><span class=w> </span><span class=n>4</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>resize</span><span class=p>(</span><span class=n>size</span><span class=w> </span><span class=o>/</span><span class=w> </span><span class=n>2</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// 获取数组头部元素，时间复杂度 O(1)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=n>T</span><span class=w> </span><span class=nf>getFirst</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>isEmpty</span><span class=p>())</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>throw</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>IllegalStateException</span><span class=p>(</span><span class=s>&#34;Array is empty&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=n>arr</span><span class=o>[</span><span class=n>start</span><span class=o>]</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// 获取数组尾部元素，时间复杂度 O(1)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=n>T</span><span class=w> </span><span class=nf>getLast</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>isEmpty</span><span class=p>())</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>throw</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>IllegalStateException</span><span class=p>(</span><span class=s>&#34;Array is empty&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// end 是开区间，指向的是下一个元素的位置，所以要减 1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=n>arr</span><span class=o>[</span><span class=p>(</span><span class=n>end</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=n>1</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>size</span><span class=p>)</span><span class=w> </span><span class=o>%</span><span class=w> </span><span class=n>size</span><span class=o>]</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>boolean</span><span class=w> </span><span class=nf>isFull</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=n>count</span><span class=w> </span><span class=o>==</span><span class=w> </span><span class=n>size</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>int</span><span class=w> </span><span class=nf>size</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=n>count</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>boolean</span><span class=w> </span><span class=nf>isEmpty</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=n>count</span><span class=w> </span><span class=o>==</span><span class=w> </span><span class=n>0</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><ul><li><p><code>CycleArray&lt;T></code>：这是一个泛型类，<code>T</code> 表示数组中存储元素的类型。</p></li><li><p><code>T[] arr</code>：用于存储数组元素的底层数组。</p></li><li><p><code>int start</code>：指向数组中第一个有效元素的索引，是一个闭区间。</p></li><li><p><code>int end</code>：指向数组中最后一个有效元素的下一个位置的索引，是一个开区间。</p></li><li><p><code>int count</code>：记录数组中当前存储的元素数量。</p></li><li><p><code>int size</code>：表示底层数组的当前容量。</p></li><li><p><code>CycleArray()</code>：无参构造方法，调用有参构造方法并将初始容量设为 1。</p></li><li><p><code>CycleArray(int size)</code>：有参构造方法，初始化底层数组的容量为 <code>size</code>，同时将 <code>start</code>、<code>end</code> 和 <code>count</code> 都初始化为 0。由于 Java 不支持直接创建泛型数组，所以使用 <code>(T[]) new Object[size]</code> 进行类型转换，并使用 <code>@SuppressWarnings("unchecked")</code> 注解来抑制类型转换警告。</p></li><li><p><code>resize(int newSize)</code>：该方法用于调整底层数组的容量。首先创建一个新的数组 <code>newArr</code>，其容量为 <code>newSize</code>。然后将原数组中的元素依次复制到新数组中，使用 <code>(start + i) % size</code> 来处理循环数组的索引。最后更新 <code>arr</code> 引用为新数组，将 <code>start</code> 重置为 0，<code>end</code> 设为 <code>count</code>，并更新 <code>size</code> 为新的容量。</p></li></ul><p>在 Java 里，<code>@SuppressWarnings("unchecked")</code> 属于注解，其用途是抑制编译器所发出的特定类型警告信息。下面为你详细解释：</p><h3 id=用途>用途</h3><p>在 Java 编程中，编译器会对代码进行检查，一旦发现可能存在问题的代码，就会给出警告。不过，有时候这些警告实际上并不会引发运行时错误，或者程序员已经明确知晓潜在风险并采取了相应的处理措施。在这种情形下，为了避免代码中充斥着不必要的警告信息，就可以使用 <code>@SuppressWarnings</code> 注解来抑制这些警告。</p><h3 id=具体含义>具体含义</h3><p><code>@SuppressWarnings("unchecked")</code> 专门用于抑制 “未经检查的类型转换” 警告。当你在代码里进行泛型类型转换时，由于 Java 的泛型是在编译时实现的，在运行时会进行类型擦除，所以编译器无法确保类型转换的安全性，这时就会给出警告。</p></section><footer class=article-footer><section class=article-tags></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>相关文章</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/zihhblog_show/p/hashmap/><div class=article-details><h2 class=article-title>哈希表的原理和实现</h2></div></a></article><article><a href=/zihhblog_show/p/queuestack/><div class=article-details><h2 class=article-title>实现队列和栈</h2></div></a></article><article><a href=/zihhblog_show/p/plan/><div class=article-details><h2 class=article-title>算法学习规划</h2></div></a></article><article><a href=/zihhblog_show/p/leetcode21/><div class=article-details><h2 class=article-title>双指针技巧秒杀七道链表题目</h2></div></a></article><article><a href=/zihhblog_show/p/sorting-algorithms-summary/><div class=article-details><h2 class=article-title>常见排序算法总结</h2></div></a></article></div></div></aside><div class=disqus-container><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//hugo-theme-stack.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div><style>.disqus-container{background-color:var(--card-background);border-radius:var(--card-border-radius);box-shadow:var(--shadow-l1);padding:var(--card-padding)}</style><script>window.addEventListener("onColorSchemeChange",e=>{typeof DISQUS=="object"&&DISQUS.reset({reload:!0})})</script><footer class=site-footer><section class=copyright>&copy;
+2026 Zihan keep learning</section><section class=powerby>是空空荡荡<br></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/zihhblog_show/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

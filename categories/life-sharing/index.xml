@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>生活分享 on Zihh Blog</title><link>https://zihanhanhan.github.io/zihhblog_show/categories/life-sharing/</link><description>Recent content in 生活分享 on Zihh Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>Zihan keep learning</copyright><lastBuildDate>Wed, 02 Apr 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://zihanhanhan.github.io/zihhblog_show/categories/life-sharing/index.xml" rel="self" type="application/rss+xml"/><item><title>时间是如此紧张</title><link>https://zihanhanhan.github.io/zihhblog_show/p/studylife/</link><pubDate>Wed, 02 Apr 2025 00:00:00 +0000</pubDate><guid>https://zihanhanhan.github.io/zihhblog_show/p/studylife/</guid><description>&lt;p>今天是四月二号，愚人节刚过。我也不知道为什么要提一句愚人节，好像是什么了不得的节日。说起这个就想到今天早晨醒来，朋友发微信跟我说复活节可以一块出来吃个饭，我反应了半天也没想到复活节是什么时候，然后就想了想来了悉尼这快两个月的时间，好像只有刚来的时候去过一次悉大0week，然后过生日去吃了一顿自助火锅，一共进过两次城，其余时间每天的生活轨迹都是学校——家——超市，三个点来回转，而且最近连逛超市的次数都少了，生活里也没什么娱乐，可能也就每周能和启林玩一次GTA5，然后就是无尽的学习。很难说效率有多高，但确实每天都在学。&lt;/p>
+&lt;p>其实倒也不是一直在学上课的内容，如果只考虑上课我都觉得还算轻松，虽然现在三个课的project同步展开，而且进展似乎均接近于0，昨天9444上午的课因为老师出差变线上了，以为线上能水一点，结果狠狠地让大家自我介绍然后按小组汇报，我们组完全没有进度，轮到我们的时候大家都在沉默，没有一个人说话，我只能打开麦克风开始跟他硬说，说的也不好但是也没办法，大家都不说那我就说呗，最后也不知道拿没拿到分数，tutor虽然拷打了我们的进度，但是还是安慰了我很多，他问我是不是在领导这个小组，我说可能吧，他最后告诉我了一些分配任务的方法，给了一些鼓励。我已经看出来了，在这里只能做自己的赵云，永远不能指望别人。但是还好约了组员们今天下午在学校集合聊了一个多小时，好歹是把任务分配确定了。周日再集合开会看看进度。而9517的小组群，很久没有人说话了，大家都在沉默，感觉这周必须开始联系大家启动了，拖到后面只会越拖越晚，然后9011也得联系组员分任务启动，都是事不宜迟。&lt;/p>
+&lt;p>今天上午已经收到了两场期末考试的时间，一个5.2，一个5.7，很难想象到期末考试已经只剩一个月了，我还有一种刚来悉尼没多久的感觉。1个月的时间又要复习，又要写作业，又要做项目，又要汇报，又要考试，我现在非常真实得感受到了三学期制的压力。确实是方方面面都被推着走。但我很难说这些内容是现在最该学的。我确实已经开始自己从网上找资料课程，每天抽很多时间学后端知识，我觉得这才是我目前最应该学的，这甚至可以说是我最近的学习重心。最开始的计划是每天至少4个小时学习时间放在这上面，从3月开始学习，狠狠学习5个月左右，秋招all in到java后端开发。每周都安排相应的学习计划，也在一步一步进行，但是现在看来确实时间过于紧迫，很难在完成学校内容的间隙找到那么多时间，可以说是没有时间。&lt;/p>
+&lt;p>如果真的抛开准备和复习考试的层面来讲，我真的不愿意把时间都花在这些学校课程上。学校的课程对于以后就业的适配程度，我最近观察下来感觉还是有些差距。也可能跟我自己的选课有关。不是说课程设置不好，其实都是紧跟实事，不管是ML还是CV，甚至大模型，AI，确实是时代所驱，这些技术确实也正在改变世界。但是回归到现实，搞算法真的能回国找到工作吗？计算机本来就一年不如一年，现在算法岗的学历门槛几乎都是双9起步，还得是顶级双9。而且其实只有某些大厂的某些部门在搞算法，小公司根本不会有这种岗位需求。尽管AI是未来更是风口，但是要做到是个公司就搞点算法研究是完全不可能的，落实到具体岗位上只会要求越来越卷。原来不理解那些网上说投算法岗找不到工作，单纯得觉得他们只是没找到最好的工作，现在发现真的不是这样，算法大方向有那么多，图像处理，自然语言处理，语音处理，大模型等等等等，更不要说还有那么多小方向，不同的研究方向内容真的是天差地别，上完学发现自己学的东西已经走到头了的情况在当下都极有可能发生。&lt;/p>
+&lt;p>前两天买了个服务器搭建博客，第一次用cursor，我的感受从最开始的惊叹到之后的焦虑，再到最后的平静，真是难以形容。已经完全实现了用语言给它描述相应的功能，它就可以写代码实现，修改代码，补充代码，讲解代码，什么都能干。我觉得所有用过cursor写代码的人都会感到恐慌，之前从来没有这么直观得意识到AI真的已经可以代替程序员的工作，它写的很快，写的有些好，写的有些准，但是这个‘有些’的程度已经足以让很多人失业，原来三个人的任务可能一个人就能干，甚至还干得更好，也许它现在还不完美，但就像chatgpt刚问世的时候一样，从0到1往往是最难的，我敢说在3年内它完全可以进化到独自完成代码编写，测试，上线所有功能，真的只是时间问题。&lt;/p>
+&lt;p>这一个多月从最开始对AI方向抱有幻想，慢慢的到真的坚定自己，我感觉对我而言最合理的方向还是后端开发，如果以后真的会用计算机吃饭的话。因为后端还是偏向底层，不是所有的公司都需要AI的开发，但是确实所有公司都需要真的实现一个app或者一个页面。而且对于企业级的项目而言，我认为AI目前还只能是辅助，不能成为全部，对于业务级的代码还是需要人工审核、编写和检验。但未来5年内，企业中的低水平程序员大概率都会被人工智能取代，服务器上将飘散着无数AI写的代码；再往大说，各行各业只会使用技术的员工也可能会慢慢被取代，只有跟人打交道才能长久。未来可能不需要那么多所谓的技术人才，但是真的需要很多能给人提供情绪价值的岗位和从业者，需要很多心理医生，需要很多类似剧本杀之类的强调人与人交互的体验店，需要很多好吃的饭店。我甚至觉得实体店才是未来，也许万悦糖尿病一条街的那些奶茶饮品店都能长期生存，会做咖啡的咖啡师不会失业，会炒菜的大厨不会失业，国家机关工作人员不会失业，甚至商场的导购也不会失业，也许十年之后面对一堆机器，面馆里一碗好吃的面比新的大语言模型问世更能让你体验到快乐，你面对导购站在店门口说的那几句“想买什么样的进来挑挑”都觉得亲切，毕竟只有人与人之间传递出的温度才是AI永远无法取代的。&lt;/p>
+&lt;p>这个世界可以没有字节跳动，但是真的不能没有麦当劳。&lt;/p></description></item><item><title>GTA的三条虫子</title><link>https://zihanhanhan.github.io/zihhblog_show/p/gta%E7%9A%84%E4%B8%89%E6%9D%A1%E8%99%AB%E5%AD%90/</link><pubDate>Wed, 27 Mar 2024 00:00:00 +0000</pubDate><guid>https://zihanhanhan.github.io/zihhblog_show/p/gta%E7%9A%84%E4%B8%89%E6%9D%A1%E8%99%AB%E5%AD%90/</guid><description>&lt;img src="https://raw.githubusercontent.com/zihanhanhan/zihhblog_img/main/c465c719d1e08eb6010547326f5b890.jpg" alt="Featured image of post GTA的三条虫子" />&lt;h2 id="思思的时间规划">思思的时间规划
+&lt;/h2>&lt;p>今天GTA的生活很快乐，虽然思思姐说只玩到11点半，但现在半夜2点半了她还在电脑前，给自己的人物进行换装，玩的不亦乐乎，我都不知道明天她到底几点能起床，我们拭目以待。&lt;/p>
+&lt;h3 id="这个标题主要是为了看看图片能不能成功加载进来">这个标题主要是为了看看图片能不能成功加载进来
+&lt;/h3>&lt;p>这一段话就水一点主要是为了加载一个照片进来&lt;/p>
+&lt;img src="https://raw.githubusercontent.com/zihanhanhan/zihhblog_img/main/f771358595ffbf728875c857fe4920c.jpg" alt="f771358595ffbf728875c857fe4920c" style="zoom: 25%;" />
+&lt;img src="https://raw.githubusercontent.com/zihanhanhan/zihhblog_img/main/7fd4209cd38e3c8176399251cbd6267.jpg" style="zoom:25%;" />
+&lt;p>ok就这样 我看到底它在网页上运行是什么效果&lt;/p></description></item><item><title>咖啡馆写代码</title><link>https://zihanhanhan.github.io/zihhblog_show/p/coding-in-cafe/</link><pubDate>Tue, 26 Mar 2024 00:00:00 +0000</pubDate><guid>https://zihanhanhan.github.io/zihhblog_show/p/coding-in-cafe/</guid><description>&lt;h2 id="为什么选择咖啡馆">为什么选择咖啡馆
+&lt;/h2>&lt;p>有时候，家里或办公室的环境会让人感到单调。咖啡馆恰好提供了一个轻松愉快的工作环境：&lt;/p>
+&lt;ul>
+&lt;li>适宜的背景音乐&lt;/li>
+&lt;li>醇香的咖啡&lt;/li>
+&lt;li>舒适的座位&lt;/li>
+&lt;li>充足的采光&lt;/li>
+&lt;/ul>
+&lt;h2 id="提升效率的小技巧">提升效率的小技巧
+&lt;/h2>&lt;ol>
+&lt;li>
+&lt;p>选择合适的时间&lt;/p>
+&lt;ul>
+&lt;li>避开人流高峰&lt;/li>
+&lt;li>选择工作日&lt;/li>
+&lt;li>建议上午时段&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>找到理想位置&lt;/p>
+&lt;ul>
+&lt;li>靠近电源插座&lt;/li>
+&lt;li>光线适中&lt;/li>
+&lt;li>远离吵闹区域&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;h2 id="必备物品清单">必备物品清单
+&lt;/h2>&lt;ul>
+&lt;li>笔记本电脑&lt;/li>
+&lt;li>降噪耳机&lt;/li>
+&lt;li>充电器&lt;/li>
+&lt;li>记事本&lt;/li>
+&lt;li>水杯&lt;/li>
+&lt;/ul>
+&lt;h2 id="注意事项">注意事项
+&lt;/h2>&lt;ol>
+&lt;li>保持适度消费&lt;/li>
+&lt;li>注意电脑安全&lt;/li>
+&lt;li>避免久坐&lt;/li>
+&lt;li>合理安排时间&lt;/li>
+&lt;/ol></description></item><item><title>我的2024年计划</title><link>https://zihanhanhan.github.io/zihhblog_show/p/my-2024-plan/</link><pubDate>Tue, 26 Mar 2024 00:00:00 +0000</pubDate><guid>https://zihanhanhan.github.io/zihhblog_show/p/my-2024-plan/</guid><description>&lt;h2 id="我的2024年计划">我的2024年计划
+&lt;/h2>&lt;p>新的一年已经开始，让我们一起规划未来的目标。&lt;/p>
+&lt;h3 id="学习目标">学习目标
+&lt;/h3>&lt;ol>
+&lt;li>
+&lt;p>技术提升&lt;/p>
+&lt;ul>
+&lt;li>深入学习人工智能&lt;/li>
+&lt;li>提高编程技能&lt;/li>
+&lt;li>学习新的技术框架&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>阅读计划&lt;/p>
+&lt;ul>
+&lt;li>每月至少读一本技术书籍&lt;/li>
+&lt;li>培养阅读习惯&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;h3 id="生活目标">生活目标
+&lt;/h3>&lt;ol>
+&lt;li>
+&lt;p>健康习惯&lt;/p>
+&lt;ul>
+&lt;li>规律作息&lt;/li>
+&lt;li>坚持运动&lt;/li>
+&lt;li>健康饮食&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>兴趣培养&lt;/p>
+&lt;ul>
+&lt;li>学习摄影&lt;/li>
+&lt;li>尝试新的运动&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;h2 id="总结">总结
+&lt;/h2>&lt;p>希望通过这些计划，在2024年实现个人成长和进步。&lt;/p></description></item><item><title>春末漫步</title><link>https://zihanhanhan.github.io/zihhblog_show/p/spring-end-walk/</link><pubDate>Mon, 15 May 2023 00:00:00 +0000</pubDate><guid>https://zihanhanhan.github.io/zihhblog_show/p/spring-end-walk/</guid><description>&lt;h2 id="春末的午后">春末的午后
+&lt;/h2>&lt;p>今天的天气格外晴朗，趁着春末夏初的好时节，我决定出门散步。五月的风还带着些许凉意，但已经能感受到即将到来的夏天的气息。&lt;/p>
+&lt;h2 id="所见所感">所见所感
+&lt;/h2>&lt;p>路过公园时，看到不少人在户外活动：&lt;/p>
+&lt;ul>
+&lt;li>老人们在下棋&lt;/li>
+&lt;li>孩子们在追逐玩耍&lt;/li>
+&lt;li>年轻人在草坪上野餐&lt;/li>
+&lt;/ul>
+&lt;p>樱花已经谢了，但新抽出的绿叶给整个公园带来了勃勃生机。阳光透过树叶的缝隙洒在地上，形成斑驳的光影，美得让人想要驻足。&lt;/p>
+&lt;h2 id="生活随想">生活随想
+&lt;/h2>&lt;p>有时候，放慢脚步，细细品味生活中的点点滴滴，反而能发现更多美好。在这个快节奏的时代，偶尔停下来，感受大自然的变化，聆听内心的声音，也是一种难得的享受。&lt;/p>
+&lt;h2 id="结语">结语
+&lt;/h2>&lt;p>生活不仅仅是匆匆忙忙的工作，也需要这样悠闲自得的时光。希望每个人都能在繁忙中找到属于自己的放松方式。&lt;/p></description></item></channel></rss>

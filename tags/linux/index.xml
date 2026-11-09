@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux on Zihh Blog</title><link>https://zihanhanhan.github.io/zihhblog_show/tags/linux/</link><description>Recent content in Linux on Zihh Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>Zihan keep learning</copyright><lastBuildDate>Tue, 26 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://zihanhanhan.github.io/zihhblog_show/tags/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>Git常用命令指南</title><link>https://zihanhanhan.github.io/zihhblog_show/p/git-command-guide/</link><pubDate>Tue, 26 Mar 2024 00:00:00 +0000</pubDate><guid>https://zihanhanhan.github.io/zihhblog_show/p/git-command-guide/</guid><description>&lt;h2 id="基础配置">基础配置
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 设置用户信息&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git config --global user.name &lt;span class="s2">&amp;#34;Your Name&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git config --global user.email &lt;span class="s2">&amp;#34;your.email@example.com&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 设置默认编辑器&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git config --global core.editor vim
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="常用命令">常用命令
+&lt;/h2>&lt;h3 id="仓库操作">仓库操作
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 初始化仓库&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git init
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 克隆仓库&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git clone &amp;lt;repository-url&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="日常工作流">日常工作流
+&lt;/h3>&lt;ol>
+&lt;li>查看状态&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git status
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git log
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git diff
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="2">
+&lt;li>提交更改&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git add .
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git commit -m &lt;span class="s2">&amp;#34;提交信息&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git push origin main
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="3">
+&lt;li>分支操作&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git branch
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git checkout -b feature/new-branch
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git merge feature/new-branch
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="最佳实践">最佳实践
+&lt;/h2>&lt;ol>
+&lt;li>
+&lt;p>提交信息规范&lt;/p>
+&lt;ul>
+&lt;li>feat: 新功能&lt;/li>
+&lt;li>fix: 修复bug&lt;/li>
+&lt;li>docs: 文档更新&lt;/li>
+&lt;li>style: 代码格式&lt;/li>
+&lt;li>refactor: 重构&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>分支管理策略&lt;/p>
+&lt;ul>
+&lt;li>main/master: 主分支&lt;/li>
+&lt;li>develop: 开发分支&lt;/li>
+&lt;li>feature/*: 功能分支&lt;/li>
+&lt;li>hotfix/*: 紧急修复&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;h2 id="进阶技巧">进阶技巧
+&lt;/h2>&lt;ol>
+&lt;li>撤销操作&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 撤销工作区修改&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git checkout -- &amp;lt;file&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 撤销暂存区修改&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git reset HEAD &amp;lt;file&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 撤销提交&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git revert &amp;lt;commit-id&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="2">
+&lt;li>标签管理&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 创建标签&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git tag v1.0.0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 查看标签&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git tag -l
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>操作系统概述</title><link>https://zihanhanhan.github.io/zihhblog_show/p/operating-system-overview/</link><pubDate>Tue, 26 Mar 2024 00:00:00 +0000</pubDate><guid>https://zihanhanhan.github.io/zihhblog_show/p/operating-system-overview/</guid><description>&lt;h2 id="什么是操作系统">什么是操作系统？
+&lt;/h2>&lt;p>操作系统是管理计算机硬件与软件资源的计算机程序，同时也是计算机系统的内核与基石。&lt;/p>
+&lt;h2 id="操作系统的主要功能">操作系统的主要功能
+&lt;/h2>&lt;ol>
+&lt;li>
+&lt;p>进程管理&lt;/p>
+&lt;ul>
+&lt;li>进程调度&lt;/li>
+&lt;li>进程同步&lt;/li>
+&lt;li>进程通信&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>内存管理&lt;/p>
+&lt;ul>
+&lt;li>内存分配&lt;/li>
+&lt;li>虚拟内存&lt;/li>
+&lt;li>内存保护&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>文件系统&lt;/p>
+&lt;ul>
+&lt;li>文件管理&lt;/li>
+&lt;li>目录管理&lt;/li>
+&lt;li>存储空间管理&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;h2 id="常见的操作系统">常见的操作系统
+&lt;/h2>&lt;ul>
+&lt;li>Windows系列&lt;/li>
+&lt;li>Linux系统&lt;/li>
+&lt;li>macOS&lt;/li>
+&lt;li>Android&lt;/li>
+&lt;li>iOS&lt;/li>
+&lt;/ul></description></item><item><title>计算机基础知识概述</title><link>https://zihanhanhan.github.io/zihhblog_show/p/computer-basics-overview/</link><pubDate>Tue, 26 Mar 2024 00:00:00 +0000</pubDate><guid>https://zihanhanhan.github.io/zihhblog_show/p/computer-basics-overview/</guid><description>&lt;h2 id="计算机基础知识概述">计算机基础知识概述
+&lt;/h2>&lt;p>计算机基础知识是学习编程和计算机科学的重要基础。本文将介绍一些基本的计算机概念。&lt;/p>
+&lt;h3 id="计算机的基本组成">计算机的基本组成
+&lt;/h3>&lt;ol>
+&lt;li>
+&lt;p>硬件系统&lt;/p>
+&lt;ul>
+&lt;li>中央处理器（CPU）&lt;/li>
+&lt;li>内存（RAM）&lt;/li>
+&lt;li>存储设备&lt;/li>
+&lt;li>输入输出设备&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>软件系统&lt;/p>
+&lt;ul>
+&lt;li>系统软件&lt;/li>
+&lt;li>应用软件&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;h3 id="计算机的工作原理">计算机的工作原理
+&lt;/h3>&lt;p>计算机通过执行指令来处理数据，这个过程包括：&lt;/p>
+&lt;ul>
+&lt;li>输入&lt;/li>
+&lt;li>处理&lt;/li>
+&lt;li>输出&lt;/li>
+&lt;li>存储&lt;/li>
+&lt;/ul>
+&lt;h2 id="总结">总结
+&lt;/h2>&lt;p>了解计算机基础知识对于深入学习编程和计算机科学非常重要。&lt;/p></description></item><item><title>咖啡馆写代码</title><link>https://zihanhanhan.github.io/zihhblog_show/p/coding-in-cafe/</link><pubDate>Tue, 26 Mar 2024 00:00:00 +0000</pubDate><guid>https://zihanhanhan.github.io/zihhblog_show/p/coding-in-cafe/</guid><description>&lt;h2 id="为什么选择咖啡馆">为什么选择咖啡馆
+&lt;/h2>&lt;p>有时候，家里或办公室的环境会让人感到单调。咖啡馆恰好提供了一个轻松愉快的工作环境：&lt;/p>
+&lt;ul>
+&lt;li>适宜的背景音乐&lt;/li>
+&lt;li>醇香的咖啡&lt;/li>
+&lt;li>舒适的座位&lt;/li>
+&lt;li>充足的采光&lt;/li>
+&lt;/ul>
+&lt;h2 id="提升效率的小技巧">提升效率的小技巧
+&lt;/h2>&lt;ol>
+&lt;li>
+&lt;p>选择合适的时间&lt;/p>
+&lt;ul>
+&lt;li>避开人流高峰&lt;/li>
+&lt;li>选择工作日&lt;/li>
+&lt;li>建议上午时段&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>找到理想位置&lt;/p>
+&lt;ul>
+&lt;li>靠近电源插座&lt;/li>
+&lt;li>光线适中&lt;/li>
+&lt;li>远离吵闹区域&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;h2 id="必备物品清单">必备物品清单
+&lt;/h2>&lt;ul>
+&lt;li>笔记本电脑&lt;/li>
+&lt;li>降噪耳机&lt;/li>
+&lt;li>充电器&lt;/li>
+&lt;li>记事本&lt;/li>
+&lt;li>水杯&lt;/li>
+&lt;/ul>
+&lt;h2 id="注意事项">注意事项
+&lt;/h2>&lt;ol>
+&lt;li>保持适度消费&lt;/li>
+&lt;li>注意电脑安全&lt;/li>
+&lt;li>避免久坐&lt;/li>
+&lt;li>合理安排时间&lt;/li>
+&lt;/ol></description></item><item><title>春末漫步</title><link>https://zihanhanhan.github.io/zihhblog_show/p/spring-end-walk/</link><pubDate>Mon, 15 May 2023 00:00:00 +0000</pubDate><guid>https://zihanhanhan.github.io/zihhblog_show/p/spring-end-walk/</guid><description>&lt;h2 id="春末的午后">春末的午后
+&lt;/h2>&lt;p>今天的天气格外晴朗，趁着春末夏初的好时节，我决定出门散步。五月的风还带着些许凉意，但已经能感受到即将到来的夏天的气息。&lt;/p>
+&lt;h2 id="所见所感">所见所感
+&lt;/h2>&lt;p>路过公园时，看到不少人在户外活动：&lt;/p>
+&lt;ul>
+&lt;li>老人们在下棋&lt;/li>
+&lt;li>孩子们在追逐玩耍&lt;/li>
+&lt;li>年轻人在草坪上野餐&lt;/li>
+&lt;/ul>
+&lt;p>樱花已经谢了，但新抽出的绿叶给整个公园带来了勃勃生机。阳光透过树叶的缝隙洒在地上，形成斑驳的光影，美得让人想要驻足。&lt;/p>
+&lt;h2 id="生活随想">生活随想
+&lt;/h2>&lt;p>有时候，放慢脚步，细细品味生活中的点点滴滴，反而能发现更多美好。在这个快节奏的时代，偶尔停下来，感受大自然的变化，聆听内心的声音，也是一种难得的享受。&lt;/p>
+&lt;h2 id="结语">结语
+&lt;/h2>&lt;p>生活不仅仅是匆匆忙忙的工作，也需要这样悠闲自得的时光。希望每个人都能在繁忙中找到属于自己的放松方式。&lt;/p></description></item></channel></rss>

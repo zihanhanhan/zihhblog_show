@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AI笔记 on Zihh Blog</title><link>https://zihanhanhan.github.io/zihhblog_show/categories/ai-notes/</link><description>Recent content in AI笔记 on Zihh Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>Zihan keep learning</copyright><lastBuildDate>Fri, 28 Mar 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://zihanhanhan.github.io/zihhblog_show/categories/ai-notes/index.xml" rel="self" type="application/rss+xml"/><item><title>COMP9517lab4 assignment</title><link>https://zihanhanhan.github.io/zihhblog_show/p/comp9517lab4-assignment/</link><pubDate>Fri, 28 Mar 2025 00:00:00 +0000</pubDate><guid>https://zihanhanhan.github.io/zihhblog_show/p/comp9517lab4-assignment/</guid><description>&lt;img src="https://raw.githubusercontent.com/zihanhanhan/zihhblog_img/main/image-20250329175351412.png" alt="Featured image of post COMP9517lab4 assignment" />&lt;h2 id="problem-analysis">Problem analysis
+&lt;/h2>&lt;p>The goal of this lab is to write an algorithm that performs image segmentation and subsequent analysis using just &lt;u>intensity thresholding&lt;/u> and &lt;u>binary morphological operators&lt;/u>. and the algorithm should be able to take any of the given lab images, produce a segmentation result containing only the bigger objects that are completely contained in the image, and print the number of objects.&lt;/p>
+&lt;p>需要写一个算法，实现图像分割和后续的分析，只需要使用强度阈值化和二值形态学算子操作。这个算法（函数）必须能够将任何输入的图片分割成只包含该图像中大的对象，并且打印出对象的个数。如封面图片所示&lt;/p>
+&lt;p>Hints: Convert the input image to grayscale, apply intensity thresholding (using either a single threshold or multiple to segment out intensities within a range), use binary morphology operators to fill any holes and filter out noise pixels in the segmentation, use binary reconstruction and subtraction to get rid of segmented objects touching the image boundary, set the remaining objects that are smaller than some size threshold to black, and then count and print the final number of objects.&lt;/p>
+&lt;p>The above example results were produced by a single algorithm. The only differences in execution for each image were the parameter values of some steps of the algorithm.&lt;/p>
+&lt;p>Show the segmentation results obtained using a single algorithm for each input image in your Jupyter notebook and include the count of objects. If your algorithm has any user parameters, their values must be specified at the beginning of your code, so that users can easily change and experiment with these parameters.&lt;/p>
+&lt;p>将输入图像转换为灰度，应用强度阈值分割（使用单个阈值或多个阈值分割出一定范围内的强度），使用二值形态学算子填补分割中的空洞并滤除噪声像素，使用二值重建和减法去除接触图像边界的分割对象，将小于某个尺寸阈值的剩余对象设置为黑色，然后计数并打印最终的对象数量。&lt;/p>
+&lt;p>需要注意的是如果函数里有自己定义的参数要提前声明，以便让其他人修改和使用相应的参数。&lt;/p>
+&lt;h2 id="keyword-learning">Keyword learning
+&lt;/h2>&lt;p>**强度阈值分割：**一种图像分割技术，根据图像中像素的强度值来将图像分为不同的区域。具体来说，就是设定一个或多个阈值，将图像中强度值高于或低于这些阈值的像素分别归类为不同的类别，通常分为目标和背景两类，从而实现将目标从背景中分离出来的目的。&lt;/p>
+&lt;p>​ 在图像中，像素强度是指每个像素所具有的数值，用于表示该像素的亮度或颜色的某种度量。关于像素强度的详细定义和相关说明：&lt;/p>
+&lt;ul>
+&lt;li>灰度图像中，像素强度通常用一个数值来表示，该数值范围一般从 0 到 255。其中，0 表示黑色，255 表示白色，中间的数值代表不同程度的灰色。例如，数值 128 表示中等灰度。像素强度反映了图像中该点的明亮程度，数值越大，像素越亮；数值越小，像素越暗。&lt;/li>
+&lt;li>对于彩色图像，通常使用 RGB 颜色模型来表示像素颜色。每个像素由红（R）、绿（G）、蓝（B）三个分量组成，每个分量都有一个强度值，范围也是 0 到 255。可以通过计算每个像素的 RGB 值的总和来大致比较像素强度。&lt;/li>
+&lt;li>HSV（色相、饱和度、明度）在 HSV 颜色空间中，V 分量表示像素的明度，即强度信息；例如，HSV 值为（0, 100%, 80%）的像素比 HSV 值为（0, 100%, 50%）的像素强度高。&lt;/li>
+&lt;/ul>
+&lt;p>**二值形态学算子：**是基于二值图像进行形态学操作的数学工具，主要包括腐蚀、膨胀、开运算、闭运算等，详细介绍：&lt;/p>
+&lt;ul>
+&lt;li>腐蚀
+&lt;ul>
+&lt;li>&lt;strong>定义&lt;/strong>：腐蚀是一种消除边界点，使目标区域缩小的操作。对于一个二值图像中的目标物体，用一个结构元素（也称为模板）在图像上移动，当结构元素的所有像素都与图像中的目标像素重合时，才保留中心像素，否则将其删除。&lt;/li>
+&lt;li>&lt;strong>作用&lt;/strong>：可以用于消除图像中的噪声点，细化物体的边界，以及分离相互连接的物体等。例如，在字符识别中，可能会使用腐蚀操作来去除字符周围的一些孤立噪声点，使字符的形状更加清晰。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>膨胀
+&lt;ul>
+&lt;li>&lt;strong>定义&lt;/strong>：与腐蚀相反，膨胀是一种将目标区域扩大的操作。同样使用结构元素在图像上移动，只要结构元素中的任何一个像素与图像中的目标像素重合，就将结构元素的中心像素设置为目标像素。&lt;/li>
+&lt;li>&lt;strong>作用&lt;/strong>：常用于填补物体内部的小孔洞，连接断裂的物体部分，以及加粗线条等。比如，在处理指纹图像时，膨胀操作可以使指纹的纹路更加连续，便于后续的特征提取。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>开运算
+&lt;ul>
+&lt;li>&lt;strong>定义&lt;/strong>：开运算由先腐蚀后膨胀两个操作组成。先对图像进行腐蚀操作，去除噪声和小的干扰物体，然后再进行膨胀操作，恢复物体的大致形状。&lt;/li>
+&lt;li>&lt;strong>作用&lt;/strong>：能够消除图像中的微小物体，平滑物体的边界，同时保持物体的整体形状和位置不变。在遥感图像分析中，开运算可以用于去除一些小型的干扰目标，如孤立的树木或建筑物，以便更好地识别大型的地物特征。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>闭运算
+&lt;ul>
+&lt;li>&lt;strong>定义&lt;/strong>：闭运算则是先膨胀后腐蚀。先通过膨胀操作连接相邻的物体或填补物体中的孔洞，然后再进行腐蚀操作，使物体的边界更加平滑。&lt;/li>
+&lt;li>&lt;strong>作用&lt;/strong>：主要用于填充物体内部的小空洞，连接临近的物体，并且保持物体的形状和大小基本不变。在医学图像分割中，闭运算可以用来填补器官内部的一些小的低密度区域，使分割出的器官更加完整。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>二值重建和减法&lt;/p>
+&lt;h2 id="implementation-steps">Implementation steps
+&lt;/h2>&lt;ol>
+&lt;li>读入图片&lt;/li>
+&lt;li>阈值化 输出二值图&lt;/li>
+&lt;li>⼆值形态学 -&amp;gt; 开运算过滤噪声、闭运算填补空洞&lt;/li>
+&lt;li>⼆值重建 -&amp;gt; 移除触碰边界的连通分量&lt;/li>
+&lt;li>过滤掉⼩于指定尺⼨的物体&lt;/li>
+&lt;li>计算剩余连通分量的个数&lt;/li>
+&lt;/ol></description></item><item><title>机器学习入门</title><link>https://zihanhanhan.github.io/zihhblog_show/p/machine-learning-basics/</link><pubDate>Tue, 26 Mar 2024 00:00:00 +0000</pubDate><guid>https://zihanhanhan.github.io/zihhblog_show/p/machine-learning-basics/</guid><description>&lt;h2 id="什么是机器学习">什么是机器学习？
+&lt;/h2>&lt;p>机器学习是人工智能的一个分支，它使计算机系统能够通过经验自动改进。不需要明确编程，机器学习算法可以从数据中学习并做出预测。&lt;/p>
+&lt;h2 id="常见的机器学习类型">常见的机器学习类型
+&lt;/h2>&lt;ol>
+&lt;li>
+&lt;p>监督学习&lt;/p>
+&lt;ul>
+&lt;li>分类问题&lt;/li>
+&lt;li>回归问题&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>无监督学习&lt;/p>
+&lt;ul>
+&lt;li>聚类&lt;/li>
+&lt;li>降维&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>强化学习&lt;/p>
+&lt;ul>
+&lt;li>决策过程&lt;/li>
+&lt;li>奖励机制&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;h2 id="入门工具和库">入门工具和库
+&lt;/h2>&lt;ul>
+&lt;li>Python：最受欢迎的机器学习编程语言&lt;/li>
+&lt;li>Scikit-learn：入门级机器学习库&lt;/li>
+&lt;li>TensorFlow：深度学习框架&lt;/li>
+&lt;li>PyTorch：另一个流行的深度学习框架&lt;/li>
+&lt;/ul>
+&lt;h2 id="学习路线建议">学习路线建议
+&lt;/h2>&lt;ol>
+&lt;li>掌握Python基础&lt;/li>
+&lt;li>学习数据处理（Numpy, Pandas）&lt;/li>
+&lt;li>了解基础算法原理&lt;/li>
+&lt;li>实践简单项目&lt;/li>
+&lt;li>深入学习高级概念&lt;/li>
+&lt;/ol></description></item><item><title>人工智能入门指南</title><link>https://zihanhanhan.github.io/zihhblog_show/p/ai-introduction-guide/</link><pubDate>Tue, 26 Mar 2024 00:00:00 +0000</pubDate><guid>https://zihanhanhan.github.io/zihhblog_show/p/ai-introduction-guide/</guid><description>&lt;h2 id="人工智能入门指南">人工智能入门指南
+&lt;/h2>&lt;p>人工智能是当今最热门的技术领域之一，本文将介绍AI的基础知识。&lt;/p>
+&lt;h3 id="什么是人工智能">什么是人工智能？
+&lt;/h3>&lt;p>人工智能（AI）是计算机科学的一个分支，致力于创造能够模拟人类智能的系统。&lt;/p>
+&lt;h3 id="ai的主要领域">AI的主要领域
+&lt;/h3>&lt;ol>
+&lt;li>
+&lt;p>机器学习&lt;/p>
+&lt;ul>
+&lt;li>监督学习&lt;/li>
+&lt;li>无监督学习&lt;/li>
+&lt;li>强化学习&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>深度学习&lt;/p>
+&lt;ul>
+&lt;li>神经网络&lt;/li>
+&lt;li>卷积神经网络&lt;/li>
+&lt;li>循环神经网络&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;h3 id="应用场景">应用场景
+&lt;/h3>&lt;ul>
+&lt;li>计算机视觉&lt;/li>
+&lt;li>自然语言处理&lt;/li>
+&lt;li>语音识别&lt;/li>
+&lt;li>推荐系统&lt;/li>
+&lt;/ul>
+&lt;h2 id="总结">总结
+&lt;/h2>&lt;p>人工智能正在改变我们的生活方式，了解AI基础知识对于未来很重要。&lt;/p></description></item></channel></rss>

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>技术笔记 on Zihh Blog</title><link>https://zihanhanhan.github.io/zihhblog_show/categories/tech-notes/</link><description>Recent content in 技术笔记 on Zihh Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>Zihan keep learning</copyright><lastBuildDate>Tue, 26 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://zihanhanhan.github.io/zihhblog_show/categories/tech-notes/index.xml" rel="self" type="application/rss+xml"/><item><title>Git常用命令指南</title><link>https://zihanhanhan.github.io/zihhblog_show/p/git-command-guide/</link><pubDate>Tue, 26 Mar 2024 00:00:00 +0000</pubDate><guid>https://zihanhanhan.github.io/zihhblog_show/p/git-command-guide/</guid><description>&lt;h2 id="基础配置">基础配置
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 设置用户信息&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git config --global user.name &lt;span class="s2">&amp;#34;Your Name&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git config --global user.email &lt;span class="s2">&amp;#34;your.email@example.com&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 设置默认编辑器&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git config --global core.editor vim
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="常用命令">常用命令
+&lt;/h2>&lt;h3 id="仓库操作">仓库操作
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 初始化仓库&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git init
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 克隆仓库&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git clone &amp;lt;repository-url&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="日常工作流">日常工作流
+&lt;/h3>&lt;ol>
+&lt;li>查看状态&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git status
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git log
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git diff
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="2">
+&lt;li>提交更改&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git add .
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git commit -m &lt;span class="s2">&amp;#34;提交信息&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git push origin main
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="3">
+&lt;li>分支操作&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git branch
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git checkout -b feature/new-branch
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git merge feature/new-branch
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="最佳实践">最佳实践
+&lt;/h2>&lt;ol>
+&lt;li>
+&lt;p>提交信息规范&lt;/p>
+&lt;ul>
+&lt;li>feat: 新功能&lt;/li>
+&lt;li>fix: 修复bug&lt;/li>
+&lt;li>docs: 文档更新&lt;/li>
+&lt;li>style: 代码格式&lt;/li>
+&lt;li>refactor: 重构&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>分支管理策略&lt;/p>
+&lt;ul>
+&lt;li>main/master: 主分支&lt;/li>
+&lt;li>develop: 开发分支&lt;/li>
+&lt;li>feature/*: 功能分支&lt;/li>
+&lt;li>hotfix/*: 紧急修复&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;h2 id="进阶技巧">进阶技巧
+&lt;/h2>&lt;ol>
+&lt;li>撤销操作&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 撤销工作区修改&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git checkout -- &amp;lt;file&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 撤销暂存区修改&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git reset HEAD &amp;lt;file&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 撤销提交&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git revert &amp;lt;commit-id&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="2">
+&lt;li>标签管理&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 创建标签&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git tag v1.0.0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 查看标签&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git tag -l
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>技术学习路线图</title><link>https://zihanhanhan.github.io/zihhblog_show/p/tech-learning-roadmap/</link><pubDate>Tue, 26 Mar 2024 00:00:00 +0000</pubDate><guid>https://zihanhanhan.github.io/zihhblog_show/p/tech-learning-roadmap/</guid><description>&lt;h2 id="技术学习路线图">技术学习路线图
+&lt;/h2>&lt;p>本文将分享一个系统的技术学习路线，帮助大家更好地规划学习路径。&lt;/p>
+&lt;h3 id="基础知识">基础知识
+&lt;/h3>&lt;ol>
+&lt;li>
+&lt;p>编程基础&lt;/p>
+&lt;ul>
+&lt;li>数据结构&lt;/li>
+&lt;li>算法&lt;/li>
+&lt;li>设计模式&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>计算机基础&lt;/p>
+&lt;ul>
+&lt;li>操作系统&lt;/li>
+&lt;li>计算机网络&lt;/li>
+&lt;li>数据库&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;h3 id="进阶学习">进阶学习
+&lt;/h3>&lt;ol>
+&lt;li>
+&lt;p>前端技术&lt;/p>
+&lt;ul>
+&lt;li>HTML/CSS&lt;/li>
+&lt;li>JavaScript&lt;/li>
+&lt;li>前端框架&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>后端技术&lt;/p>
+&lt;ul>
+&lt;li>服务器开发&lt;/li>
+&lt;li>API设计&lt;/li>
+&lt;li>微服务架构&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;h3 id="学习方法">学习方法
+&lt;/h3>&lt;ol>
+&lt;li>
+&lt;p>实践项目&lt;/p>
+&lt;ul>
+&lt;li>从简单到复杂&lt;/li>
+&lt;li>循序渐进&lt;/li>
+&lt;li>及时总结&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>学习资源&lt;/p>
+&lt;ul>
+&lt;li>官方文档&lt;/li>
+&lt;li>技术博客&lt;/li>
+&lt;li>开源项目&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;h2 id="总结">总结
+&lt;/h2>&lt;p>制定合理的学习计划，保持持续学习的动力，才能在技术领域不断进步。&lt;/p></description></item></channel></rss>
